@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Itch.io</title>
+    <link rel="stylesheet" href="itch-io.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>Add new Game</h1>
+      <form method="POST" action="/itch-io">
+        <table>
+          <tr>
+            <td class="label"><label for="name">Name :</label></td>
+            <td><input type="text" id="name" name="name" required /></td>
+          </tr>
+          <tr>
+            <td class="label"><label for="link">Link :</label></td>
+            <td><input type="url" id="link" name="link" required /></td>
+          </tr>
+          <tr>
+            <td class="label"><label for="category">Category :</label></td>
+            <td>
+              <select id="category" name="category">
+                <option value="escape">Escape</option>
+                <option value="horror">Horror</option>
+                <option value="weird">Weird</option>
+                <option value="adult">Adult</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="label"><label for="os">OS :</label></td>
+            <td>
+              <select id="os" name="os">
+                <option value="windows">Windows</option>
+                <option value="android">Android</option>
+                <option value="web-browser">Web Browser</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="label"><label for="size">Size :</label></td>
+            <td>
+              <input type="number" id="size" name="size" min="0" required />
+            </td>
+          </tr>
+          <tr>
+            <td class="label">
+              <label for="unit">Unit :</label>
+            </td>
+            <td>
+              <select name="unit" id="unit">
+                <option value="MB">MB</option>
+                <option value="GB">GB</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="label"><label for="date">Date :</label></td>
+            <td><input type="date" id="date" name="date" required /></td>
+          </tr>
+          <tr>
+            <td class="label"><label for="status">Status :</label></td>
+            <td>
+              <select id="status" name="status">
+                <option value="playing">Playing</option>
+                <option value="played">Played</option>
+                <option value="wishlist">Wishlist</option>
+                <option value="backlog">Backlog</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="label"><label for="cost">Cost :</label></td>
+            <td>
+              <select id="cost" name="cost">
+                <option value="free">Free</option>
+                <option value="paid">Paid</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="label"><label for="rating">Rating :</label></td>
+            <td>
+              <input type="number" id="rating" name="rating" min="1" max="5" />
+            </td>
+          </tr>
+          <tr>
+            <td class="label"><label for="review">Review :</label></td>
+            <td>
+              <textarea
+                id="review"
+                name="review"
+                placeholder="Write your review"
+              ></textarea>
+            </td>
+          </tr>
+        </table>
+        <button type="submit">Add Game</button>
+      </form>
+    </div>
+
+    <hr />
+
+    <h1>All the Games</h1>
+    <div class="data">
+      <table border="1" class="table">
+        <thead>
+          <th>Name</th>
+          <th>Category</th>
+          <th>OS</th>
+          <th>
+            <select class="size">
+              <option value="">size</option>
+              <option value="50">Below 50MB</option>
+              <option value="100">Below 100MB</option>
+              <option value="500">Below 500MB</option>
+              <option value="1024">Below 1GB</option>
+              <option value="2048">Below 2GB</option>
+              <option value="3072">Below 3GB</option>
+              <option value="4096">Below 4GB</option>
+              <option value="5120">Below 5GB</option>
+              <option value="5120+">above 5GB</option>
+            </select>
+          </th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Cost</th>
+          <th>Rating</th>
+          <th>Review</th>
+        </thead>
+        <tbody>
+          <% for(let game of games) { %>
+          <tr>
+            <td><a href="<%= game.link %>"><%= game.name %></a></td>
+            <td><%= game.category %></td>
+            <td><%= game.os %></td>
+            <td>
+              <%= game.size >= 1024 ? (game.size / 1024).toFixed(2) + " GB" :
+              game.size + " MB" %>
+            </td>
+            <td><%= game.date.toDateString() %></td>
+            <td><%= game.status %></td>
+            <td><%= game.cost %></td>
+            <td><%= game.rating %></td>
+            <td><textarea><%= game.review %></textarea></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <script src="itch-io.js"></script>
+  </body>
+</html>
